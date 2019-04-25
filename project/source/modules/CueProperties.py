@@ -84,7 +84,11 @@ class CueProperties():
 
 		if self.Nodepostfixactive:
 			postfix = self.FPlayer.NODE.Movfilepostfix
-			movFile = self.Movfile.replace('PREVIEW_0', postfix)
+			print(postfix)
+			movFile = self.Movfile.replace('PREVIEW_1', postfix)
+
+			if self.FPlayer.NODE.digits > 6:
+				movFile = movFile.replace('wall', 'floor' )
 			return movFile
 		else:
 			return self.Movfile

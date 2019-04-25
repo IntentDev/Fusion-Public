@@ -195,6 +195,11 @@ class System:
 			self.LoadLocal(self.fileName, node.Index, node.Server, node.Gpu)
 
 		else:
+
+			print(node.Address, node.Username, node.Password, 
+							self.fileName, node.Index, 
+							node.Server, node.Gpu, node.Monitor)
+
 			self.LoadRemote(node.Address, node.Username, node.Password, 
 							self.fileName, node.Index, 
 							node.Server, node.Gpu, node.Monitor)	
@@ -202,8 +207,12 @@ class System:
 	def Loadallnodes(self, *args):
 
 
-		for node in self.NODES[1:]:
-			self.LoadNode(node)
+		for i, node in enumerate(self.NODES[1:]):
+
+			run("args[0].LoadNode(args[1])", self.ownerComp, node,
+			delayFrames = i * 30)	
+
+			#self.LoadNode(node)
 
 		pass
 
