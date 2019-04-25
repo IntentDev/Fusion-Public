@@ -1,6 +1,8 @@
 create common username and password on all machines (where user is administrator)
 create windows credentials on all machines
 
+run netplwiz to disable password prompt on startup
+
 set Touch preferences to allow to run system command
 
 Windows UAC is off
