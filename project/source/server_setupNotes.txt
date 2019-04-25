@@ -1,0 +1,15 @@
+create common username and password on all machines (where user is administrator)
+create windows credentials on all machines
+
+set Touch preferences to allow to run system command
+
+Windows UAC is off
+
+media drive needs same drive letter on all machines
+
+set following regkeys on machines:
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system\LocalAccountTokenFilterPolicy = 1 
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters\AutoShareServer 
+Change the AutoShareServer key to 1
