@@ -86,7 +86,7 @@ class ControllerExt(System):
 		self.ownerComp.CurrentPlaylist.Reorder(cuesIndices)
 
 	def PlaylistOnDrop(self, dropData):
-		
+		#print('Playlist On Drop:', dropData)
 		dragItems = dropData['dragItems']
 		row = dropData['row']
 

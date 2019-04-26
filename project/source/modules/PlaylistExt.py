@@ -103,13 +103,19 @@ class PlaylistExt:
 	
 	def ParseDropString(self, string, insert):
 		
-		if os.path.isfile(string):
+		#if os.path.isfile(string):
 
-			self.LoadFile(string, insert)
+			#self.LoadFile(string, insert)
 
-		elif os.path.isdir(string):
+		# need better method for multi-node
+
+		if os.path.isdir(string):
 
 			self.LoadDirectory(string, insert)
+
+		else:
+
+			self.LoadFile(string, insert)
 
 
 

@@ -78,7 +78,11 @@ class CueExt(CueProperties):
 			run("args[0].SetDurFromMovFile()", self.ownerComp,
 				delayFrames=10)
 
-			self.Label = movFile.split('/')[-1:][0]
+			movName = movFile.split('/')[-1:][0]
+			movName = movName.split('.')[:1][0]
+			movName = movName.replace('__PREVIEW_1', '')
+
+			self.Label = movName
 
 		else:
 			self.Label = label

@@ -60,7 +60,7 @@ class RemoteExt:
 		self.tcpip.sendBytes(args)
 
 	def GetAttr(self, comp, attribute, *args, **kwargs):
-
+		#print(comp, attribute, *args, **kwargs)	
 		data = pickle.dumps([2, comp.path, attribute, args, kwargs])
 		self.tcpip.sendBytes(data)
 

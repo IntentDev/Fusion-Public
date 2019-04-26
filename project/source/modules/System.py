@@ -206,13 +206,17 @@ class System:
 
 	def Loadallnodes(self, *args):
 
+		self.Config.op('loadAllNodes').run()
 
+		
+		# not working, no delay need to call script above
+		'''
 		for i, node in enumerate(self.NODES[1:]):
-
+			delay = i * 60	
 			run("args[0].LoadNode(args[1])", self.ownerComp, node,
-			delayFrames = i * 30)	
+			delayFrames = delay, fromOP=self.ownerComp)	
 
-			#self.LoadNode(node)
+			#self.LoadNode(node)'''
 
 		pass
 

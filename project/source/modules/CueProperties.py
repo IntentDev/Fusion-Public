@@ -87,8 +87,6 @@ class CueProperties():
 			print(postfix)
 			movFile = self.Movfile.replace('PREVIEW_1', postfix)
 
-			if self.FPlayer.NODE.digits > 6:
-				movFile = movFile.replace('wall', 'floor' )
 			return movFile
 		else:
 			return self.Movfile
