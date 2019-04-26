@@ -121,7 +121,7 @@ class PlaylistExt:
 
 	def LoadOP(self, operator, comp=None, insert=-1):	
 
-		print(insert)
+		#print(insert)
 
 		self.CueCreate(top=operator, comp=comp, insert=insert)
 
@@ -170,7 +170,7 @@ class PlaylistExt:
 
 	def DeleteAllCues(self):
 
-		print('DeleteAllCues')
+		#print('DeleteAllCues')
 	
 		cues = self.ownerComp.findChildren(tags=['CUE'])
 		for cue in cues:

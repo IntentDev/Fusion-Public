@@ -43,7 +43,7 @@ class ControllerExt(System):
 			self.ownerComp.CurrentPlaylist.CueSelect(cue)
 			
 			if self.ownerComp.Startcueonselect and self.MasterCtrl:	
-				debug('Start on Cue Select')
+				#debug('Start on Cue Select')
 				run("args[0].GetAttr('CueStart')", self.ownerComp, delayFrames=6)
 			
 			elif self.ownerComp.Startcueonselect and self.NODE.Ispreviewrender:

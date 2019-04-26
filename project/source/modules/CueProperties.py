@@ -84,7 +84,7 @@ class CueProperties():
 
 		if self.Nodepostfixactive:
 			postfix = self.FPlayer.NODE.Movfilepostfix
-			print(postfix)
+			#print(postfix)
 			movFile = self.Movfile.replace('PREVIEW_1', postfix)
 
 			return movFile

@@ -70,7 +70,7 @@ class CueExt(CueProperties):
 			self.Label = label
 
 		elif movFile:
-			print(movFile)
+			#print(movFile)
 			self.Texsource = 'FILE'
 			self.Movfile = movFile
 			self.MovFileIn.preload(0)

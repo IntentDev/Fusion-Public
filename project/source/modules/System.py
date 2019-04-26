@@ -129,6 +129,10 @@ class System:
 
 			p = subprocess.Popen(pOpenCommand, cwd = binFolder, env=envV)
 
+			print(	'Launching:\t', 'NODE' + str(node), '\n\t\t\t', 
+					'Server', self.ownerComp.NODE.Address, '\n\t\t\t', 
+					'GPU', gpu, '\n\t\t\t', 'File ', projectPath)
+
 		#print(p.pid)
 
 	def StopLocal(self, pid):
@@ -177,10 +181,35 @@ class System:
 		run("mod.subprocess.Popen(args[0], cwd = args[1])", 
 			pOpenCommand, rDir, delayFrames = 15 * node)
 
-		print('Launching:\t', node, '\n\t\t\t', 'On Server ', server, '\n\t\t\t', 'GPU ', gpu,
-		'\n\t\t\t', 'File ', projectName, '\n\t\t\t', 'Project Path ', projectPath,
-		'\n\t\t\t', 'pOpenCommand ', pOpenCommand,
-		'\n\t\t\t', 'Launch Command ', launchCommand)
+		print('Launching:\t', 'NODE' + str(node), '\n\t\t\t', 'Server', client, '\n\t\t\t', 
+			'GPU', gpu, '\n\t\t\t', 'File ', projectPath)#,
+		#'\n\t\t\t', 'pOpenCommand ', pOpenCommand,
+		#'\n\t\t\t', 'Launch Command ', launchCommand)
+
+	def KillRemoteNode(self, node):
+
+		client = node.Address
+		username = node.Username
+		password = node.Password
+		processName = 'TouchDesigner099.exe'
+
+		projectDir = project.folder
+		projectDir = re.sub('[/]', '\\\\', projectDir)
+
+		dirExe = self.rawStr(projectDir + '\externalTools\PSTools\PsKill.exe -t \\')
+		rDir = self.rawStr(projectDir + '\externalTools\PSTools')
+		username = self.rawStr(username)
+		pOpenCommand = dirExe + client +' -u '+ username +' -p '+ password +' '+ processName
+		
+		run("mod.subprocess.Popen(args[0], cwd = args[1])", 
+			pOpenCommand, rDir, delayFrames = 15 * node.Index)
+
+
+
+	def KillRemoteNodes(self):
+
+		self.Config.op('killAllRemoteNodes').run()
+
 
 	def StopRemote(self, client, userName, password, pid):
 
@@ -196,9 +225,9 @@ class System:
 
 		else:
 
-			print(node.Address, node.Username, node.Password, 
-							self.fileName, node.Index, 
-							node.Server, node.Gpu, node.Monitor)
+			#print(node.Address, node.Username, node.Password, 
+			#				self.fileName, node.Index, 
+			#				node.Server, node.Gpu, node.Monitor)
 
 			self.LoadRemote(node.Address, node.Username, node.Password, 
 							self.fileName, node.Index, 
@@ -226,7 +255,10 @@ class System:
 
 		pass
 
+	def Killallremotenodes(self, *args):
 
+
+		self.KillRemoteNodes()
 
 	def Loadnode(self, *args):
 
