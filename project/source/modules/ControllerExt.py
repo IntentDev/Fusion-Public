@@ -159,7 +159,7 @@ class ControllerExt(System):
 	########################################################################
 
 	def SetSyncSelects(self):
-
+			#debug('SetSyncSelects')
 			top1 = self.Cross.Select1.par.top.eval()
 
 			if top1:

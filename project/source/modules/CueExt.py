@@ -8,6 +8,8 @@ class CueExt(CueProperties):
 		CueProperties.__init__(self, ownerComp)
 
 		self.ownerComp = ownerComp
+		self.node = parent.FPlayer.NODE
+		self.isPreview = self.node.Ispreviewrender
 		
 
 	def ParChange(self, par):
@@ -34,6 +36,10 @@ class CueExt(CueProperties):
 				self.Comp.MasterIndexSource = self.index
 
 			self.Comp.Start()
+
+		if self.Audiosource == 'AUDIO_FILE' and self.isPreview:
+
+			self.Audiochop.par.Cuepulse.pulse()
 
 			
 
