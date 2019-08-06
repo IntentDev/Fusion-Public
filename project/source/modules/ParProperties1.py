@@ -1,31 +1,15 @@
-Parps = iop.Modules.op('ParProperties').module
-CueProperties = iop.Modules.op('CueProperties').module.CueProperties
+CueProperties = op('CueProperties').module.CueProperties
 
 class CueExt(CueProperties):
 	"""
 	CueExt description
 	"""
 	def __init__(self, ownerComp):
-		self.ownerComp = ownerComp
-		Parps.parProperties(self, parCallbacksDAT=ownerComp.op('parCallbacks'))
 		CueProperties.__init__(self, ownerComp)
-
+		self.ownerComp = ownerComp
 		self.node = parent.FPlayer.NODE
 		self.isPreview = self.node.Ispreviewrender
-
-		# set par property post setters
-		self.ParpGrp.Label.fPostSet = self.LabelPostSetter
-		self.ParpGrp.Playindex.fPostSet = self.PlayindexPostSetter
-		self.ParpGrp.Comp.fPostSet = self.CompPostSetter
-		self.ParpGrp.Top.fPostSet = self.TopPostSetter
-		self.ParpGrp.Audiochop.fPostSet = self.AudiochopPostSetter
-
-		# you can define getters and setters (pre set) as well
-		# technically your appending/prepending the getter and setter functions
-		# which are already getting/setting the par value
-		#self.ParpGrp.Someparname.fGet = self.Somefunction
-		#self.ParpGrp.Someparname.fSet = self.SomeOtherFunction
-
+		
 	def ParChange(self, par):
 		#self.FPlayer.CueParChange(self.ownerComp, par)
 		self.FPlayer.SetAttr(par.owner, par.name, par.eval())
@@ -58,6 +42,7 @@ class CueExt(CueProperties):
 	def Pulse(self):	
 		if self.Texsource == 'FILE':
 			self.MovFileIn.par.cuepulse.pulse()	
+
 
 	def Setup(	self, cueID, label=None, 
 				top=None, comp=None, audioChop=None, 
@@ -100,22 +85,6 @@ class CueExt(CueProperties):
 		if self.MovFileIn.numImages > 1:
 			self.Duration = self.MovFileIn.numSeconds
 
-	def LabelPostSetter(self, value):
-		self.playlist.SetPlaylist()
-			
-	def PlayindexPostSetter(self, value):
-		self.playlist.SetPlaylist()
-		
-	def CompPostSetter(self, value):
-		if hasattr(value, 'FPlayerCueComp'):
-			self.FPlayerCueCompLoaded = True
-			self.selCompIndex.par.chop = self.Comp.MasterIndex	
-			
-	def TopPostSetter(self, value):
-		self.selectTop.cook(force=True)
-		self.ownerComp.par.Top = value
-		
-	def AudiochopPostSetter(self, value):
-		self.selectAudioChop.cook(force=True)
-		self.ownerComp.par.Audiochop = value	
+
+
 

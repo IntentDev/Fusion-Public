@@ -43,7 +43,7 @@ class CrossExt:
 			
 
 	def CrossFadeRemote(self, comp):
-		print('CrossFade Remote')
+		#debug('CrossFade Remote')
 		self.CrossVal = round(self.crossChop[0].eval())
 		self.NextTop = comp.Texture
 		self.Cross()

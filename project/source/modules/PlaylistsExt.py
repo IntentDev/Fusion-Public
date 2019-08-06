@@ -11,8 +11,6 @@ class PlaylistsExt:
 		self.CurrentPlaylist = playlist
 
 	def PlaylistCreate(	self, label=None, duration=10):
-
-
 		playlistID = self.NumPlaylists
 		name = 'playlist' + str(playlistID + 1)
 
@@ -30,8 +28,6 @@ class PlaylistsExt:
 		self.SetPlaylists()
 
 	def PlaylistDelete(self, playlist):
-
-
 		if self.FPlayer.NODE.Ismaster:
 			message = 'Are you sure you want to Delete: ' + playlist.Label
 			confirm = ui.messageBox('Delete Playlist', message, buttons=['Cancel', 'Delete Playlist'])

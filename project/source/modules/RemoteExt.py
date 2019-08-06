@@ -84,7 +84,7 @@ class RemoteExt:
 		setattr(comp.par, attribute, value)
 
 	def getAttr(self, data):
-		
+		#print(data)
 		comp = op(data[0])
 		attribute = data[1]
 		args = data[2]

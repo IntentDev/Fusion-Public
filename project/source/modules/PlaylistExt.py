@@ -28,11 +28,9 @@ class PlaylistExt:
 	def CueCreate(	self, label=None, top=None, comp=None, audioChop=None, 
 					movFile=None, duration=10, insert=-1):
 
-
-			
 		#cueID = self.NumCues
 		cueID = self.MaxCueIndex + 1
-		name = 'cue' + str(cueID + 1)
+		name = 'cue' + str(cueID)
 
 		self.CurrentCue = self.ownerComp.copy(self.FPlayer.MasterCue)
 		self.CurrentCue.nodeX = 0

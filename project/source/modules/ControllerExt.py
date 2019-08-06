@@ -16,7 +16,6 @@ class ControllerExt(System):
 		self.UI = ownerComp.op('ui')
 		self.UI_Playlists = self.UI.op('playlists')
 		self.UI_Playlist =  self.UI.op('playlist')
-		self.UI_Cue = self.UI.op('cue')
 
 		controlModeLookup = {'LOCAL': 0, 'LOCAL_CONTROL_EXTERNAL': 1, 
 							'CONTROL_EXTERNAL': 2, 'EXTERNAL': 3, 'BACKUP_UI': 4}
@@ -51,10 +50,11 @@ class ControllerExt(System):
 				pass
 
 	def CueStart(self):
-
+		
 		if self.Ismastersync:
-
-			self.sync.par.Cuestart.pulse()
+			#debug('Cue Start')	
+			self.sync.par.Cuestart.pulse(5)
+			self.sync.cook(force=True, recurse=True)
 			pass
 
 	def CueStartSync(self):
@@ -74,10 +74,7 @@ class ControllerExt(System):
 
 
 	def CueSetLabel(self, cue, label):
-
 		cue.Label = label
-		self.UI_Cue.Load(cue)
-
 
 	# Playlist Functions
 	########################################################################	
