@@ -27,8 +27,6 @@ class PlaylistExt:
 
 	def CueCreate(	self, label=None, top=None, comp=None, audioChop=None, 
 					movFile=None, duration=10, insert=-1):
-
-		#cueID = self.NumCues
 		cueID = self.MaxCueIndex + 1
 		name = 'cue' + str(cueID)
 
@@ -39,12 +37,10 @@ class PlaylistExt:
 
 		if not label:
 			if comp:
-
 				if 'CUE_COMP' in comp.tags:
 					label = comp.par.Name.eval()
 				else:
 					label = comp.name
-
 			elif top:
 				label = top.name
 			else:
@@ -57,41 +53,29 @@ class PlaylistExt:
 		self.SetPlaylist()
 
 	def CueDelete(self, cue):
-
-
 		if self.FPlayer.NODE.Ismaster:
 			message = 'Are you sure you want to Delete: ' + cue.Label
-			confirm = ui.messageBox('Delete Cue', message, buttons=['Cancel', 'Delete Cue'])
-			
+			confirm = ui.messageBox('Delete Cue', message, buttons=['Cancel', 'Delete Cue'])			
 			if confirm == 1:
-
 				cue.destroy()
 				self.SetPlaylist()
-
 		else:
 			cue.destroy()
 			self.SetPlaylist()	
 
 
-	def LoadDirectory(self, directory, insert=-1):
-		
+	def LoadDirectory(self, directory, insert=-1):	
 		filePaths = []
 		for (root, dir, files) in os.walk(directory):
-	
 			for file in files:
-
 				filePaths.append(os.path.join(root, file))
 
-		for filePath in filePaths:
-	
+		for filePath in filePaths:	
 			self.LoadFile(filePath, insert)
-
 			if insert != -1:
 				insert += 1
 
-
 	def LoadFile(self, filePath, insert=-1):
-
 		fileExt = os.path.splitext(filePath)[1]
 		#print(fileExt)
 
@@ -99,87 +83,55 @@ class PlaylistExt:
 
 			self.CueCreate(movFile=filePath)
 	
-	def ParseDropString(self, string, insert):
-		
+	def ParseDropString(self, string, insert):		
 		#if os.path.isfile(string):
-
 			#self.LoadFile(string, insert)
-
 		# need better method for multi-node
-
 		if os.path.isdir(string):
-
 			self.LoadDirectory(string, insert)
-
 		else:
-
 			self.LoadFile(string, insert)
 
-
-
 	def LoadOP(self, operator, comp=None, insert=-1):	
-
-		#print(insert)
-
 		self.CueCreate(top=operator, comp=comp, insert=insert)
 
 	def LoadCOMP(self, comp, insert=-1):
-
 		outTops = comp.findChildren(type=outTOP)
-
 		if len(outTops) > 0:
 
 			outTops.sort(key=lambda x: x.digits)
 			self.LoadOP(outTops[0], comp=comp, insert=insert)
 
-
 	def Reorder(self, cuesIndices):
-
+		mod.pprint.pprint(cuesIndices)
 		for cuesIndex in cuesIndices:
-
 			cue = cuesIndex[0]
 			index = cuesIndex[1]
-			cue.Playindex = index
-
-
+			cue.Playindex = index + 1
 
 	def SetPlaylist(self):
-
 		cueComps = self.ownerComp.findChildren(tags=['CUE'])
-
 		playlist = []
-
 		for cueComp in cueComps:
-
 			playlist.append([cueComp.Label, cueComp])
 
-
 		playlist.sort(key=lambda x: x[1].Playindex)	
-
 		self.Playlist = playlist			
-
 
 	def Createnewcue(self, *args):
 		label = 'Empty Cue'
 		self.CueCreate(label=label)
 
-
-
-
 	def DeleteAllCues(self):
-
-		#print('DeleteAllCues')
 	
 		cues = self.ownerComp.findChildren(tags=['CUE'])
 		for cue in cues:
-			cue.destroy()	
-
-
+			if cue.Playindex != 0:
+				cue.destroy()	
 
 		self.SetPlaylist()
 
 	def Deleteallcues(self, *args):
-
 		self.DeleteAllCues()
 
 	@property
@@ -200,7 +152,6 @@ class PlaylistExt:
 		self.ownerComp.par.Playlistindex = value
 		self.playlistsComp.SetPlaylists()
 
-
 	@property
 	def Playlist(self):
 		return self.ownerComp.fetch('Playlist', tdu.Dependency([])).val
@@ -209,13 +160,10 @@ class PlaylistExt:
 	def Playlist(self, value):
 		self.ownerComp.store('Playlist', tdu.Dependency(value))
 
-
 	@property
 	def MaxCueIndex(self):
 		i = 0
-
 		for cue in self.Playlist:
-
 			i = max(cue[1].digits, i)
 
 		return i
@@ -223,7 +171,6 @@ class PlaylistExt:
 	@property
 	def NumCues(self):
 		return len(self.Playlist)
-
 
 	@property
 	def CurrentCue(self):

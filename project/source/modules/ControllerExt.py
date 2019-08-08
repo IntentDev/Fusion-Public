@@ -13,9 +13,12 @@ class ControllerExt(System):
 		self.sync = self.Remote.op('sync')
 		self.Sync = self.sync.op('sync')
 		self.Cross = ownerComp.op('cross')
+		self.Sequencer = ownerComp.op('sequencer')
 		self.UI = ownerComp.op('ui')
 		self.UI_Playlists = self.UI.op('playlists')
 		self.UI_Playlist =  self.UI.op('playlist')
+		self.UI_Sequencer = self.UI.op('sequencer')
+
 
 		controlModeLookup = {'LOCAL': 0, 'LOCAL_CONTROL_EXTERNAL': 1, 
 							'CONTROL_EXTERNAL': 2, 'EXTERNAL': 3, 'BACKUP_UI': 4}
@@ -125,32 +128,48 @@ class ControllerExt(System):
 
 	# Playlists Functions
 	########################################################################
+		
+	def PlaylistsReorder(self, playistIndices):
+		self.ownerComp.Playlists.Reorder(playistIndices)
 
 	def PlaylistSelect(self, playlist):
 
 		self.ownerComp.Playlists.CurrentPlaylist = playlist
 		self.CueSelect(self.ownerComp.Playlists.CurrentPlaylist.CurrentCue)
-		
 
 	def PlaylistStart(self):
-
 		pass
 
-
 	def PlaylistSetLabel(self, playlist, label):
-
 		playlist.Label = label
 
 	def PlaylistDelete(self, playlist):
-
 		if playlist:
 			self.ownerComp.Playlists.PlaylistDelete(playlist)	
 
-	def PlaylistCreate(self):
-		
+	def PlaylistCreate(self):	
 		self.ownerComp.Playlists.PlaylistCreate()
 
+	def PlaylistLoad(self, path):
+		self.ownerComp.Playlists.PlaylistLoad(path)
 
+	# Sequencer 
+	########################################################################
+	def SequencerStart(self):
+		if self.Ismastersync:
+			self.Sequencer.Start()
+
+	def SequencerPlay(self, value):
+		if self.Ismastersync and not self.NODE.Ismaster:
+			self.Sequencer.Play(value)
+	
+	def SequencerInitialize(self):
+		if self.Ismastersync:
+			self.Sequencer.Initialize()
+
+	def SequencerEndAction(self, value):
+		if self.Ismastersync and not self.NODE.Ismaster:
+			self.Sequencer.OnDone(value)
 
 	# Sync 
 	########################################################################

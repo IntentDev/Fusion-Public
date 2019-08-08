@@ -28,10 +28,12 @@ class CueExt(CueProperties):
 
 	def ParChange(self, par):
 		#self.FPlayer.CueParChange(self.ownerComp, par)
-		self.FPlayer.SetAttr(par.owner, par.name, par.eval())
+		self.FPlayer.Remote.SetAttr(par.owner, par.name, par.eval())
 		self.playlist.SetPlaylist()
 
 	def Start(self):
+
+
 		if self.Texsource == 'FILE':
 			if self.MovFileCue:
 				self.MovFileCue = False
@@ -40,7 +42,7 @@ class CueExt(CueProperties):
 
 		if self.Comp and self.FPlayerCueCompLoaded:
 			if self.FPlayer.RemoteCtrl:
-				self.Comp.IsMasterIndexSource = False
+				#self.Comp.IsMasterIndexSource = False
 				self.Comp.MasterIndexSource = self.index
 
 			self.Comp.Start()
@@ -90,8 +92,9 @@ class CueExt(CueProperties):
 			self.Label = label
 
 		self.Playindex = cueID
-
 		self.selSync.par.channames = self.index.path[1:]
+		self.ownerComp.cook(force=True, recurse=True)
+
 
 	def Preload(self):
 		self.MovFileIn.preload(self.MovFileCuePoint)

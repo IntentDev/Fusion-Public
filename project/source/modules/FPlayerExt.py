@@ -13,6 +13,26 @@ class FPlayerExt:
 		self.MasterCue = self.MasterPlaylist.op('masterCue0')
 		self.Output = ownerComp.op('output')
 
+	def PlaylistSetSave(self):
+		path = ui.chooseFile(load=False, start='sets', fileTypes=['tox'])
+		if path:
+			self.Playlists.save(path)
+
+	def PlaylistSetLoadChoose(self):
+		path = ui.chooseFile(start='sets', fileTypes=['tox'])
+		if path:
+			self.ownerComp.GetAttr('PlaylistSetLoad', path)
+	
+	def PlaylistSetLoad(self, path):
+		self.Playlists.par.externaltox = path
+		self.Playlists.par.reinitnet.pulse()
+		if 'PLAYLIST_SET' not in self.Playlists.tags:
+			print('Tox file loaded is not a playlist set')
+			self.Playlists.par.externaltox = 'tox/masterPlaylists'
+			self.Playlists.par.reinitnet.pulse()
+
+		self.Playlists.SetPlaylists()
+
 	@property
 	def Playlists(self):
 		return self.ownerComp.par.Playlists.eval()
@@ -20,7 +40,6 @@ class FPlayerExt:
 	@Playlists.setter
 	def Playlists(self, value):
 		self.ownerComp.par.Playlists = value
-
 
 	@property
 	def CurrentPlaylist(self):

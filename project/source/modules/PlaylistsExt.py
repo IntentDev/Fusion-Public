@@ -11,14 +11,19 @@ class PlaylistsExt:
 		self.CurrentPlaylist = playlist
 
 	def PlaylistCreate(	self, label=None, duration=10):
-		playlistID = self.NumPlaylists
+
+		playlists = self.ownerComp.findChildren(tags=['PLAYLIST'])
+		playlistID = 0
+		for playlist in playlists:
+			playlistID = max(playlistID, playlist.digits)
+
 		name = 'playlist' + str(playlistID + 1)
 
 		self.CurrentPlaylist = self.ownerComp.copy(self.FPlayer.MasterPlaylist)
 		self.CurrentPlaylist.nodeX = 0
 		self.CurrentPlaylist.nodeY = playlistID * -200
 		self.CurrentPlaylist.name = name
-
+		self.CurrentPlaylist.Playlistindex = playlistID	
 		if not label:
 
 			label = name
@@ -41,6 +46,22 @@ class PlaylistsExt:
 			playlist.destroy()
 			self.SetPlaylists()	
 	
+	def PlaylistSaveCurrent(self):
+		self.PlaylistSave(self.CurrentPlaylist)
+
+	def PlaylistSave(self, playlist):
+		path = ui.chooseFile(load=False, start='playlists', fileTypes=['tox'])
+		if path:
+			playlist.save(path)
+
+	def PlaylistLoadChoose(self):
+		path = ui.chooseFile(start='playlists', fileTypes=['tox'])
+		if path:
+			self.FPlayer.GetAttr('PlaylistLoad', path)
+	
+	def PlaylistLoad(self, path):
+		self.ownerComp.loadTox(path)
+		self.SetPlaylists()
 
 	def Reorder(self, indices):
 
