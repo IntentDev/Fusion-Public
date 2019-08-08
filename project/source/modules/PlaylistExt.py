@@ -38,7 +38,10 @@ class PlaylistExt:
 		if not label:
 			if comp:
 				if 'CUE_COMP' in comp.tags:
-					label = comp.par.Name.eval()
+					if comp.par.Label.eval() != '':
+						label = comp.par.Label.eval()
+					else:
+						label = comp.name
 				else:
 					label = comp.name
 			elif top:
@@ -63,6 +66,16 @@ class PlaylistExt:
 			cue.destroy()
 			self.SetPlaylist()	
 
+	def Initialize(self):
+		if self.FPlayer.NODE.Ismaster:
+			lister = self.FPlayer.UI_Playlist.op('playlist/list/lister')
+			if len(lister.SelectedRows) > 0:
+				lister.DeselectRow(lister.SelectedRows[0])
+
+		cue = self.Playlist[0][1]	
+		self.FPlayer.GetAttr('CueSelect', cue)
+		if not self.FPlayer.Startcueonselect:
+			self.FPlayer.GetAttr('CueStart')
 
 	def LoadDirectory(self, directory, insert=-1):	
 		filePaths = []

@@ -137,8 +137,8 @@ class ControllerExt(System):
 		self.ownerComp.Playlists.CurrentPlaylist = playlist
 		self.CueSelect(self.ownerComp.Playlists.CurrentPlaylist.CurrentCue)
 
-	def PlaylistStart(self):
-		pass
+	def PlaylistInitialize(self):
+		self.ownerComp.CurrentPlaylist.Initialize()
 
 	def PlaylistSetLabel(self, playlist, label):
 		playlist.Label = label

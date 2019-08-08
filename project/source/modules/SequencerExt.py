@@ -23,9 +23,7 @@ class SequencerExt:
 		self.Timer.par.initialize.pulse()
 		self.Timer.par.play = False
 
-		cue = self.curPlaylist[0][1]	
-		self.fPlayer.GetAttr('CueSelect', cue)
-		self.fPlayer.GetAttr('CueStart')
+		self.fPlayer.GetAttr('PlaylistInitialize')
 
 	def OnDone(self, value):
 		self.Timer.par.ondone = value	

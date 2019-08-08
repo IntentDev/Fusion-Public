@@ -12,6 +12,7 @@ class FPlayerExt:
 		self.MasterPlaylist = self.MasterPlaylists.op('masterPlaylist0')
 		self.MasterCue = self.MasterPlaylist.op('masterCue0')
 		self.Output = ownerComp.op('output')
+		self.NDI = self.Output.op('spoutVideoToNDI')
 
 	def PlaylistSetSave(self):
 		path = ui.chooseFile(load=False, start='sets', fileTypes=['tox'])
@@ -66,15 +67,6 @@ class FPlayerExt:
 	def Startcueonselect(self, value):
 		self.ownerComp.par.Startcueonselect = value
 
-
-	@property
-	def Updatecueuionselect(self):
-		return self.ownerComp.par.Updatecueuionselect.eval()
-
-	@Updatecueuionselect.setter
-	def Updatecueuionselect(self, value):
-		self.ownerComp.par.Updatecueuionselect = value
-
 	@property
 	def Usecuecrossdur(self):
 		return self.ownerComp.par.Usecuecrossdur.eval()
@@ -88,11 +80,10 @@ class FPlayerExt:
 		return self.ownerComp.par.Audiorate.eval()
 
 	@property
-	def Resw(self):
-		return self.ownerComp.par.Resw.eval()
+	def Editmode(self):
+		return self.ownerComp.par.Editmode.eval()
 
-	@property
-	def Resh(self):
-		return self.ownerComp.par.Resh.eval()
-	
+	@Editmode.setter
+	def Editmode(self, value):
+		self.ownerComp.par.Editmode = value
 

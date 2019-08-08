@@ -11,10 +11,7 @@ class FPlayerUIExt:
 
 	def CueLoad(self, cue):
 
-		if self.fPlayer.Updatecueuionselect:
-		
-			#self.UI_Cue.Load(cue)
-			pass
+		pass
 
 
 

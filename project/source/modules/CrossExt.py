@@ -18,56 +18,38 @@ class CrossExt:
 		self.runGroup = str(ownerComp.id)
 
 	def CrossFade(self, comp):
-
 		trigVal = self.trigger[0].eval()
-
 		if trigVal == 0.0 or trigVal == 1.0:
-
 			#if self.fPlayer.CtrlInt:	
 			self.NextTop = comp.Texture
 			self.Cross()
-
 			self.fPlayer.SetSyncSelects()
 
-
 		else:
-
 			for r in runs:
-
 				if r.group == self.runGroup:
 					r.kill()
 
 			run("args[0].CrossFade(args[1])", self.ownerComp, comp,
 			delayFrames=1, group=self.runGroup)
 
-			
-
 	def CrossFadeRemote(self, comp):
-		#debug('CrossFade Remote')
 		self.CrossVal = round(self.crossChop[0].eval())
 		self.NextTop = comp.Texture
 		self.Cross()
 		self.fPlayer.SetSyncSelects()
 
 	def CrossFadeEnd(self):
-
-		if self.PrevComp and self.PrevComp != self.CurrentTop.parent():
-
+		if self.PrevComp and self.PrevComp != self.CurrentTop.parent():		
 			self.PrevComp.End()
-
-
 
 	def Cross(self, *args):
 		self.CrossVal = -1 * self.CrossVal + 1
 
-
 	def SetCrossBlend(self, val, prev):
-	
 		self.crossBlend.par.index = val
-
 		if (val == 1.0 or val == 0.0):
 			self.crossBlend.par.blend = False
-
 		else:
 			self.crossBlend.par.blend = True
 	
@@ -76,7 +58,6 @@ class CrossExt:
 
 	def Resh(self, par):
 		self.crossBlend.par.resolution2 = par.eval()
-
 
 	@property
 	def CrossVal(self):
@@ -104,9 +85,7 @@ class CrossExt:
 
 	@NextTop.setter
 	def NextTop(self, value):
-
 		self.nextSelect.par.top = value
-
 
 	@property
 	def PrevComp(self):
@@ -114,7 +93,6 @@ class CrossExt:
 		if self.nextSelect.par.top.eval():
 			PrevComp = self.nextSelect.par.top.eval().parent()
 		return PrevComp
-
 
 	@property
 	def Crossduration(self):
