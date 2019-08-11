@@ -99,36 +99,36 @@ class Node:
 		self.ownerComp.par.Canvassizeh = value
 
 	@property
-	def Rendersizew(self):
-		return self.ownerComp.par.Rendersizew.eval()
+	def Noderendersizew(self):
+		return self.ownerComp.par.Noderendersizew.eval()
 
-	@Rendersizew.setter
-	def Rendersizew(self, value):
-		self.ownerComp.par.Rendersizew = value
-
-	@property
-	def Rendersizeh(self):
-		return self.ownerComp.par.Rendersizeh.eval()
-
-	@Rendersizeh.setter
-	def Rendersizeh(self, value):
-		self.ownerComp.par.Rendersizeh = value
+	@Noderendersizew.setter
+	def Noderendersizew(self, value):
+		self.ownerComp.par.Noderendersizew = value
 
 	@property
-	def Renderoffsetx(self):
-		return self.ownerComp.par.Renderoffsetx.eval()
+	def Noderendersizeh(self):
+		return self.ownerComp.par.Noderendersizeh.eval()
 
-	@Renderoffsetx.setter
-	def Renderoffsetx(self, value):
-		self.ownerComp.par.Renderoffsetx = value
+	@Noderendersizeh.setter
+	def Noderendersizeh(self, value):
+		self.ownerComp.par.Noderendersizeh = value
 
 	@property
-	def Renderoffsety(self):
-		return self.ownerComp.par.Renderoffsety.eval()
+	def Noderenderoffsetx(self):
+		return self.ownerComp.par.Noderenderoffsetx.eval()
 
-	@Renderoffsety.setter
-	def Renderoffsety(self, value):
-		self.ownerComp.par.Renderoffsety = value
+	@Noderenderoffsetx.setter
+	def Noderenderoffsetx(self, value):
+		self.ownerComp.par.Noderenderoffsetx = value
+
+	@property
+	def Noderenderoffsety(self):
+		return self.ownerComp.par.Noderenderoffsety.eval()
+
+	@Noderenderoffsety.setter
+	def Noderenderoffsety(self, value):
+		self.ownerComp.par.Noderenderoffsety = value
 
 	@property
 	def Ismaster(self):

@@ -20,8 +20,8 @@ class ConfigExt():
 		nodes = self.GetNodes()
 		nodeNames = [node.name for node in nodes]
 
-		self.ownerComp.par.Selectnode.menuNames = nodeNames[1:]
-		self.ownerComp.par.Selectnode.menuLabels = nodeNames[1:]
+		self.ownerComp.par.Selectnode.menuNames = nodeNames
+		self.ownerComp.par.Selectnode.menuLabels = nodeNames
 
 
 	def InitNode(self, node):
@@ -31,6 +31,14 @@ class ConfigExt():
 		node.Ispreviewrender = False
 		node.Isbackup = False
 		node.Outputaudio = False
+
+		viewOutput = node.op('viewOutput')
+		viewOutput.outputCOMPConnectors[0].disconnect()
+		viewOutput.outputCOMPConnectors[0].connect(node.op('output0'))
+		
+		if node.op('viewMasterUI'):
+			node.op('viewMasterUI').destroy()
+
 
 	def Saveallnodes(self, *args):
 

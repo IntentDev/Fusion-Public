@@ -315,3 +315,12 @@ class System:
 	@GPU.setter
 	def GPU(self, value):
 		self.ownerComp.store('GPU', int(value))
+
+	@property
+	def PREVIEW_NODE(self):
+		for node in self.NODES:
+			if node.Ispreviewrender:
+				return node
+		return self.NODES[0]
+		
+

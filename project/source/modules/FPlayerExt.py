@@ -87,3 +87,7 @@ class FPlayerExt:
 	def Editmode(self, value):
 		self.ownerComp.par.Editmode = value
 
+	@property
+	def PreviewMoviePostfix(self):
+		return self.ownerComp.Config.par.Previewmoviepostfix.eval()
+

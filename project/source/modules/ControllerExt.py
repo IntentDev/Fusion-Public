@@ -17,7 +17,7 @@ class ControllerExt(System):
 		self.UI = ownerComp.op('ui')
 		self.UI_Playlists = self.UI.op('playlists')
 		self.UI_Playlist =  self.UI.op('playlist')
-		self.UI_Sequencer = self.UI.op('sequencer')
+		self.UI_Sequencer = self.UI.op('masterControls/sequencer')
 
 
 		controlModeLookup = {'LOCAL': 0, 'LOCAL_CONTROL_EXTERNAL': 1, 
@@ -214,31 +214,29 @@ class ControllerExt(System):
 	########################################################################
 
 	def GetAttr(self, attribute, *args, **kwargs):
-		'''
 		if self.CtrlInt:
-
 			getattr(self.ownerComp, attribute)(*args, **kwargs)
-
 		if self.CtrlExt:
-			#print('GetAttr Ext:', attribute)
-			self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)'''
+			self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)
 
-		getattr(self.ownerComp, attribute)(*args, **kwargs)
-		self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)
+		#getattr(self.ownerComp, attribute)(*args, **kwargs)
+		#self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)
 
 	def SetAttr(self, comp, attribute, value):
-		'''
 		if self.CtrlInt:
-
 			setattr(comp, attribute, value)
-
 		if self.CtrlExt:
+			self.Remote.SetAttr(comp, attribute, value)
 
-			self.Remote.SetAttr(comp, attribute, value)'''
+		#setattr(comp, attribute, value)
+		#self.Remote.SetAttr(comp, attribute, value)
 
-		setattr(comp, attribute, value)
-		self.Remote.SetAttr(comp, attribute, value)
+	def SetPar(self, comp, parName, value, internal=False, external=True):
+		if internal:
+			setattr(comp.par, parName, value)
 
+		if self.CtrlExt and external:
+			self.Remote.SetPar(comp, parName, value)
 
 
 

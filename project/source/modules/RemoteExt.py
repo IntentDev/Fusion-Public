@@ -50,12 +50,10 @@ class RemoteExt:
 	# Call to Call function, set attribute or set parameter on remote component
 	##########################################
 	def SetAttr(self, comp, attribute, value):
-
 		args = pickle.dumps([0, comp.path, attribute, value])
 		self.tcpip.sendBytes(args)
 
 	def SetPar(self, comp, attribute, value):
-
 		args = pickle.dumps([1, comp.path, attribute, value])
 		self.tcpip.sendBytes(args)
 
@@ -67,9 +65,9 @@ class RemoteExt:
 	# Receive
 	##########################################
 	def ReceiveBytes(self, bytes):
-
-		data = pickle.loads(bytes)
-		self.remoteFuncs[data[0]](data[1:])
+		if not self.fPlayer.NODE.Ismaster:
+			data = pickle.loads(bytes)
+			self.remoteFuncs[data[0]](data[1:])
 
 	def setAttr(self, data):
 		comp = op(data[0])
