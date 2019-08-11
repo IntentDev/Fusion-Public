@@ -32,17 +32,19 @@ class PlaylistsExt:
 
 		self.SetPlaylists()
 
-	def PlaylistDelete(self, playlist):
+	def PlaylistDelete(self, playlist, remoteDelete=False):
 		if self.FPlayer.NODE.Ismaster:
 			message = 'Are you sure you want to Delete: ' + playlist.Label
-			confirm = ui.messageBox('Delete Playlist', message, buttons=['Cancel', 'Delete Playlist'])
+			confirm = ui.messageBox('Delete Playlist', 
+				message, buttons=['Cancel', 'Delete Playlist'])
 			
 			if confirm == 1:
-
 				playlist.destroy()
+				self.FPlayer.Remote.GetAttr(self.ownerComp, 
+					'PlaylistDelete', playlist, remoteDelete=True)
 				self.SetPlaylists()
 
-		else:
+		elif remoteDelete:
 			playlist.destroy()
 			self.SetPlaylists()	
 	
@@ -71,32 +73,22 @@ class PlaylistsExt:
 			index = index[1]
 			playlist.Playlistindex = index
 
-
-
 	def SetPlaylists(self):
-
 		playlistComps = self.ownerComp.findChildren(tags=['PLAYLIST'])
-
 		playlists = []
 
 		for playlistComp in playlistComps:
-
 			playlists.append([playlistComp.Label, playlistComp])
-
 
 		playlists.sort(key=lambda x: x[1].Playlistindex)	
 
 		self.Playlists = playlists			
 
-
 	def Createnewplaylist(self, *args):
 		self.PlaylistCreate()
 
-
 	def DeleteAllPlaylists(self):
-
-		print('DeleteAllPlaylists')
-	
+		#print('DeleteAllPlaylists')	
 		playlists = self.ownerComp.findChildren(tags=['PLAYLIST'])
 		for playlist in playlists:
 			playlist.destroy()	
@@ -106,7 +98,6 @@ class PlaylistsExt:
 		self.SetPlaylists()
 
 	def Deleteallplaylists(self, *args):
-
 		self.DeleteAllPlaylists()
 
 	@property

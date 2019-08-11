@@ -4,10 +4,8 @@ class ControllerExt(System):
 	"""
 	ControllerExt description
 	"""
-	def __init__(self, ownerComp):
-		
+	def __init__(self, ownerComp):	
 		System.__init__(self, ownerComp)
-
 		self.ownerComp = ownerComp
 		self.Remote = ownerComp.op('remote')
 		self.sync = self.Remote.op('sync')
@@ -19,10 +17,8 @@ class ControllerExt(System):
 		self.UI_Playlist =  self.UI.op('playlist')
 		self.UI_Sequencer = self.UI.op('masterControls/sequencer')
 
-
 		controlModeLookup = {'LOCAL': 0, 'LOCAL_CONTROL_EXTERNAL': 1, 
 							'CONTROL_EXTERNAL': 2, 'EXTERNAL': 3, 'BACKUP_UI': 4}
-
 
 		self.SetCtrlInternalExternal()
 
@@ -48,6 +44,7 @@ class ControllerExt(System):
 
 	def CueStartSync(self):
 		# called by chopexec looking at sync source
+		# debug("start cue from sync")
 		cue = self.ownerComp.CurrentCue
 		cue.Start()	
 
@@ -73,9 +70,7 @@ class ControllerExt(System):
 		#print('Playlist On Drop:', dropData)
 		dragItems = dropData['dragItems']
 		row = dropData['row']
-
 		insert = -1
-
 		if row != -1:
 			insert = row - 1
 
@@ -102,7 +97,7 @@ class ControllerExt(System):
 
 	def CueDelete(self, cue):
 
-		if cue:
+		if cue and self.ownerComp.NODE.Ismaster:
 			self.ownerComp.CurrentPlaylist.CueDelete(cue)
 
 	def CueCreate(self):
@@ -110,14 +105,13 @@ class ControllerExt(System):
 		self.ownerComp.CurrentPlaylist.CueCreate(label=label)
 
 
-	# Playlists Functions
+	# Playlists Set Functions
 	########################################################################
 		
 	def PlaylistsReorder(self, playistIndices):
 		self.ownerComp.Playlists.Reorder(playistIndices)
 
 	def PlaylistSelect(self, playlist):
-
 		self.ownerComp.Playlists.CurrentPlaylist = playlist
 		self.CueSelect(self.ownerComp.Playlists.CurrentPlaylist.CurrentCue)
 
@@ -128,7 +122,7 @@ class ControllerExt(System):
 		playlist.Label = label
 
 	def PlaylistDelete(self, playlist):
-		if playlist:
+		if playlist and self.ownerComp.NODE.Ismaster:
 			self.ownerComp.Playlists.PlaylistDelete(playlist)	
 
 	def PlaylistCreate(self):	
@@ -174,7 +168,6 @@ class ControllerExt(System):
 			self.sync.SetCrossComps(comp1, comp2)
 
 	def SetCtrlInternalExternal(self):
-
 		self.MasterCtrl = tdu.Dependency(self.Controlmode in ['LOCAL', 
 															'LOCAL_CONTROL_EXTERNAL', 
 															'CONTROL_EXTERNAL'])
@@ -218,8 +211,6 @@ class ControllerExt(System):
 
 		if self.CtrlExt and external:
 			self.Remote.SetPar(comp, parName, value)
-
-
 
 	@property
 	def Controlmode(self):

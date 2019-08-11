@@ -55,14 +55,17 @@ class PlaylistExt:
 
 		self.SetPlaylist()
 
-	def CueDelete(self, cue):
+	def CueDelete(self, cue, remoteDelete=False):
 		if self.FPlayer.NODE.Ismaster:
 			message = 'Are you sure you want to Delete: ' + cue.Label
-			confirm = ui.messageBox('Delete Cue', message, buttons=['Cancel', 'Delete Cue'])			
+			confirm = ui.messageBox('Delete Cue', 
+				message, buttons=['Cancel', 'Delete Cue'])			
 			if confirm == 1:
 				cue.destroy()
+				self.FPlayer.Remote.GetAttr(self.ownerComp, 
+				'CueDelete', cue, remoteDelete=True)
 				self.SetPlaylist()
-		else:
+		elif remoteDelete:
 			cue.destroy()
 			self.SetPlaylist()	
 
@@ -90,10 +93,7 @@ class PlaylistExt:
 
 	def LoadFile(self, filePath, insert=-1):
 		fileExt = os.path.splitext(filePath)[1]
-		#print(fileExt)
-
 		if fileExt in self.fileExtensions:
-
 			self.CueCreate(movFile=filePath)
 	
 	def ParseDropString(self, string, insert):		
@@ -104,6 +104,8 @@ class PlaylistExt:
 			self.LoadDirectory(string, insert)
 		else:
 			self.LoadFile(string, insert)
+		run("args[0].cook(force=True, recurse=True)",
+			self.ownerComp, delayFrames=30)
 
 	def LoadOP(self, operator, comp=None, insert=-1):	
 		self.CueCreate(top=operator, comp=comp, insert=insert)
