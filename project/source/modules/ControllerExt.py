@@ -29,23 +29,12 @@ class ControllerExt(System):
 	# Cue Functions
 	########################################################################
 	def CueParChange(self, cue, par):
-		
-		#if cue == self.ownerComp.CurrentCue:
-		#	self.UI.CueLoad(cue)
-
-		#cue.parent().SetPlaylist()
-
 		pass
 
-
 	def CueSelect(self, cue):
-		#print('CueSelect')
-		if cue:
-			self.UI.CueLoad(cue)	
+		if cue:	
 			self.ownerComp.CurrentPlaylist.CueSelect(cue)
-			
 			if self.ownerComp.Startcueonselect and self.MasterCtrl:	
-				#debug('Start on Cue Select')
 				run("args[0].GetAttr('CueStart')", self.ownerComp, delayFrames=6)
 			
 			elif self.ownerComp.Startcueonselect and self.NODE.Ispreviewrender:
@@ -53,28 +42,23 @@ class ControllerExt(System):
 				pass
 
 	def CueStart(self):
-		
 		if self.Ismastersync:
-			#debug('Cue Start')	
 			self.sync.par.Cuestart.pulse(5)
-			self.sync.cook(force=True, recurse=True)
-			pass
+			#self.sync.cook(force=True, recurse=True)
 
 	def CueStartSync(self):
-
+		# called by chopexec looking at sync source
 		cue = self.ownerComp.CurrentCue
 		cue.Start()	
 
 		if self.ownerComp.Usecuecrossdur:
 			self.Cross.Crossduration = cue.Crossduration
 
-		if self.MasterCtrl:
+		#if self.MasterCtrl:
+		if self.ownerComp.NODE.Ismastersync:	
 			self.Cross.CrossFade(cue)
 		elif self.RemoteCtrl:
 			self.Cross.CrossFadeRemote(cue)
-
-
-
 
 	def CueSetLabel(self, cue, label):
 		cue.Label = label
@@ -175,16 +159,13 @@ class ControllerExt(System):
 	########################################################################
 
 	def SetSyncSelects(self):
-			#debug('SetSyncSelects')
 			top1 = self.Cross.Select1.par.top.eval()
-
 			if top1:
 				comp1 = top1.parent()
 			else:
 				comp1 = self.ownerComp.MasterCue
 
 			top2 = self.Cross.Select2.par.top.eval()
-
 			if top2:
 				comp2 = top2.parent()
 			else:

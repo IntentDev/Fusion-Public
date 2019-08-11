@@ -32,8 +32,6 @@ class CueExt(CueProperties):
 		self.playlist.SetPlaylist()
 
 	def Start(self):
-
-
 		if self.Texsource == 'FILE':
 			if self.MovFileCue:
 				self.MovFileCue = False
@@ -42,7 +40,6 @@ class CueExt(CueProperties):
 
 		if self.Comp and self.FPlayerCueCompLoaded:
 			if self.FPlayer.RemoteCtrl:
-				#self.Comp.IsMasterIndexSource = False
 				self.Comp.MasterIndexSource = self.index
 
 			self.Comp.Start()
