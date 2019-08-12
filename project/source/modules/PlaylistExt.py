@@ -23,17 +23,17 @@ class PlaylistExt:
 		self.Label = label
 
 	def CueSelect(self, cue):
-		self.CurrentCue = cue
+		self.SelectedCue = cue
 
 	def CueCreate(	self, label=None, top=None, comp=None, audioChop=None, 
 					movFile=None, duration=10, insert=-1):
 		cueID = self.MaxCueIndex + 1
 		name = 'cue' + str(cueID)
 
-		self.CurrentCue = self.ownerComp.copy(self.FPlayer.MasterCue)
-		self.CurrentCue.nodeX = 0
-		self.CurrentCue.nodeY = cueID * -200
-		self.CurrentCue.name = name
+		self.SelectedCue = self.ownerComp.copy(self.FPlayer.MasterCue)
+		self.SelectedCue.nodeX = 0
+		self.SelectedCue.nodeY = cueID * -200
+		self.SelectedCue.name = name
 
 		if not label:
 			if comp:
@@ -49,7 +49,7 @@ class PlaylistExt:
 			else:
 				label = name
 
-		self.CurrentCue.Setup(	cueID, label=label, top=top, comp=comp,
+		self.SelectedCue.Setup(	cueID, label=label, top=top, comp=comp,
 								audioChop=audioChop, duration=duration,
 								movFile=movFile, insert=-1)
 
@@ -118,7 +118,6 @@ class PlaylistExt:
 			self.LoadOP(outTops[0], comp=comp, insert=insert)
 
 	def Reorder(self, cuesIndices):
-		mod.pprint.pprint(cuesIndices)
 		for cuesIndex in cuesIndices:
 			cue = cuesIndex[0]
 			index = cuesIndex[1]
@@ -186,6 +185,14 @@ class PlaylistExt:
 	@property
 	def NumCues(self):
 		return len(self.Playlist)
+
+	@property
+	def SelectedCue(self):
+		return self.ownerComp.fetch('SelectedCue', None)
+
+	@SelectedCue.setter
+	def SelectedCue(self, value):
+		self.ownerComp.store('SelectedCue', value)
 
 	@property
 	def CurrentCue(self):

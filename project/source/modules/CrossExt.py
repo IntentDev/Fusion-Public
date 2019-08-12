@@ -35,7 +35,6 @@ class CrossExt:
 			delayFrames=1, group=self.runGroup)
 
 	def CrossFadeRemote(self, comp):
-		
 		self.CrossVal = round(self.crossChop[0].eval())
 		#debug('CrossFadeRemote:', comp, self.CrossVal)
 		self.NextTop = comp.Texture

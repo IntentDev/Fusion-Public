@@ -52,8 +52,11 @@ class FPlayerExt:
 		self.ownerComp.store('CurrentPlaylist', value)
 
 	@property
-	def CurrentCue(self):
-		return self.CurrentPlaylist.CurrentCue
+	def SelectedCue(self):
+		if self.CurrentPlaylist:
+			return self.CurrentPlaylist.SelectedCue
+		else:
+			None
 
 	@property
 	def PreviousCue(self):

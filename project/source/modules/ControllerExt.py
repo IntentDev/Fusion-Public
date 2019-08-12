@@ -41,11 +41,16 @@ class ControllerExt(System):
 		if self.Ismastersync:
 			self.sync.par.Cuestart.pulse(5)
 			#self.sync.cook(force=True, recurse=True)
+		
+		elif self.NODE.Ismaster:
+			self.ownerComp.CurrentPlaylist.CurrentCue = self.SelectedCue
+			
 
 	def CueStartSync(self):
 		# called by chopexec looking at sync source
 		# debug("start cue from sync")
-		cue = self.ownerComp.CurrentCue
+		cue = self.ownerComp.SelectedCue
+		self.ownerComp.CurrentPlaylist.CurrentCue = cue
 		cue.Start()	
 
 		if self.ownerComp.Usecuecrossdur:
@@ -107,7 +112,7 @@ class ControllerExt(System):
 
 	def PlaylistSelect(self, playlist):
 		self.ownerComp.Playlists.CurrentPlaylist = playlist
-		self.CueSelect(self.ownerComp.Playlists.CurrentPlaylist.CurrentCue)
+		self.CueSelect(self.ownerComp.Playlists.CurrentPlaylist.SelectedCue)
 
 	def PlaylistInitialize(self):
 		self.ownerComp.CurrentPlaylist.Initialize()
