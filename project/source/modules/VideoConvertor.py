@@ -76,9 +76,9 @@ class VideoConvertor:
 
 					nodeIndex = i
 					node = self.FPlayer.NODES[nodeIndex]	
-					address = node.Address
-					path = '//' + address + '/' + path		
-					path = path.replace(':', '')
+					#address = node.Address
+					#path = '//' + address + '/' + path		
+					#path = path.replace(':', '')
 
 					if not os.path.isdir(path):
 						os.mkdir(path, 0o777)
@@ -109,9 +109,9 @@ class VideoConvertor:
 			nodeIndex = i
 
 			node = self.FPlayer.NODES[nodeIndex]
-			address = node.Address
-			path = '//' + address + '/' + path		
-			path = path.replace(':', '')
+			#address = node.Address
+			#path = '//' + address + '/' + path		
+			#path = path.replace(':', '')
 
 			if not os.path.isdir(path):
 				os.mkdir(path, 0o777)
