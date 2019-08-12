@@ -18,6 +18,7 @@ class CrossExt:
 		self.runGroup = str(ownerComp.id)
 
 	def CrossFade(self, comp):
+		#debug('CrossFade:', comp)
 		trigVal = self.trigger[0].eval()
 		if trigVal == 0.0 or trigVal == 1.0:
 			#if self.fPlayer.CtrlInt:	
@@ -34,7 +35,9 @@ class CrossExt:
 			delayFrames=1, group=self.runGroup)
 
 	def CrossFadeRemote(self, comp):
+		
 		self.CrossVal = round(self.crossChop[0].eval())
+		#debug('CrossFadeRemote:', comp, self.CrossVal)
 		self.NextTop = comp.Texture
 		self.Cross()
 		self.fPlayer.SetSyncSelects()

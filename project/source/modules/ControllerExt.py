@@ -75,23 +75,17 @@ class ControllerExt(System):
 			insert = row - 1
 
 		for item in dropData['dragItems']:
-
 			if type(item) == str:
-				self.ownerComp.CurrentPlaylist.ParseDropString(item, insert)	
-			
+				self.ownerComp.CurrentPlaylist.ParseDropString(item, insert)		
 			elif item.isTOP:
 				self.ownerComp.CurrentPlaylist.LoadOP(item, insert=insert)
-
 			elif item.isCOMP:
-
 				if type(item) == listCOMP:
-
 					row = dropData['fromListerInfo'][0]
 					obj = item.Data[row]['rowObject']
 					item = obj[1]
 				
 				self.ownerComp.CurrentPlaylist.LoadCOMP(item, insert)
-
 			if row != -1:
 				insert += 1
 
