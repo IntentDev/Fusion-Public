@@ -15,6 +15,8 @@ class SyncExt:
 		self.selCrossDataComp1 = self.syncSources.op('selCrossDataComp1')
 		self.selCrossDataComp2 = self.syncSources.op('selCrossDataComp2')
 
+		ownerComp.par.Cuestart = False
+
 	def SyncOutActive(self, state):
 		if self.Syncmode == 'SYNC_CHOP':
 			self.syncOut.par.active = state

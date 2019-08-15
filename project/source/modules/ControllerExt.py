@@ -39,9 +39,9 @@ class ControllerExt(System):
 
 	def CueStart(self):
 		if self.Ismastersync:
-			self.sync.par.Cuestart.pulse(5)
-			#self.sync.cook(force=True, recurse=True)
-		
+			self.sync.par.Cuestart = True
+			run("args[0].par.Cuestart = False", self.sync, delayFrames=5)
+
 		elif self.NODE.Ismaster:
 			self.ownerComp.CurrentPlaylist.CurrentCue = self.SelectedCue
 			
