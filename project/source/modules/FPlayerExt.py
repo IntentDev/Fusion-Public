@@ -15,12 +15,12 @@ class FPlayerExt:
 		self.NDI = self.Output.op('spoutVideoToNDI')
 
 	def PlaylistSetSave(self):
-		path = ui.chooseFile(load=False, start='sets', fileTypes=['tox'])
+		path = ui.chooseFile(load=False, start='components/user/sets', fileTypes=['tox'])
 		if path:
 			self.Playlists.save(path)
 
 	def PlaylistSetLoadChoose(self):
-		path = ui.chooseFile(start='sets', fileTypes=['tox'])
+		path = ui.chooseFile(start='components/user/sets', fileTypes=['tox'])
 		if path:
 			self.ownerComp.GetAttr('PlaylistSetLoad', path)
 	
@@ -29,7 +29,7 @@ class FPlayerExt:
 		self.Playlists.par.reinitnet.pulse()
 		if 'PLAYLIST_SET' not in self.Playlists.tags:
 			print('Tox file loaded is not a playlist set')
-			self.Playlists.par.externaltox = 'tox/masterPlaylists'
+			self.Playlists.par.externaltox = 'components/system/masterPlaylists'
 			self.Playlists.par.reinitnet.pulse()
 
 		self.Playlists.SetPlaylists()

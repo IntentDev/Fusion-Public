@@ -52,12 +52,12 @@ class PlaylistsExt:
 		self.PlaylistSave(self.CurrentPlaylist)
 
 	def PlaylistSave(self, playlist):
-		path = ui.chooseFile(load=False, start='playlists', fileTypes=['tox'])
+		path = ui.chooseFile(load=False, start='components/user/playlists', fileTypes=['tox'])
 		if path:
 			playlist.save(path)
 
 	def PlaylistLoadChoose(self):
-		path = ui.chooseFile(start='playlists', fileTypes=['tox'])
+		path = ui.chooseFile(start='components/user/playlists', fileTypes=['tox'])
 		if path:
 			self.FPlayer.GetAttr('PlaylistLoad', path)
 	

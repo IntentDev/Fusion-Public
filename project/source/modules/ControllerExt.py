@@ -56,7 +56,6 @@ class ControllerExt(System):
 		if self.ownerComp.Usecuecrossdur:
 			self.Cross.Crossduration = cue.Crossduration
 
-		#if self.MasterCtrl:
 		if self.ownerComp.NODE.Ismastersync:	
 			self.Cross.CrossFade(cue)
 		elif self.RemoteCtrl:
