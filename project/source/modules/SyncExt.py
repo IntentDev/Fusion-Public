@@ -6,6 +6,7 @@ class SyncExt:
 		self.fplayer = parent.FPlayer
 		self.syncOut = ownerComp.op('syncout')
 		self.syncIn = ownerComp.op('syncin')
+		self.nullSyncIn = ownerComp.op('nullSyncIn')
 		self.shdmemOut = ownerComp.op('sharedmemoutSync')
 		self.shdmemIn = ownerComp.op('sharedmeminSync')
 		self.touchOut = ownerComp.op('touchoutSync')
@@ -17,41 +18,74 @@ class SyncExt:
 
 		ownerComp.par.Cuestart = False
 
+		self.syncAddress = '239.255.1.1'
+		self.syncPort = 15000
+		self.syncTimeout = 34
+
 	def SyncOutActive(self, state):
 		if self.Syncmode == 'SYNC_CHOP':
-			self.syncOut.par.active = state
-			self.syncOut.bypass = not state
+			if self.syncOut:
+				self.syncOut.par.active = state
+				self.syncOut.bypass = not state
+			else:
+				self.syncOut = self.ownerComp.create(syncoutCHOP, 'syncout')
+				self.syncOut.par.multicastaddress = self.syncAddress
+				self.syncOut.par.port = self.syncPort
+				self.syncOut.par.timeout = self.syncTimeout
+				self.syncSources.outputConnectors[0].connect(self.syncOut)
+			
 			self.shdmemOut.par.active = False
 			self.touchOut.par.active = False
 
 		elif self.Syncmode == 'SHARED_MEM':
-			self.syncOut.par.active = False
-			self.syncOut.bypass = True
+			if self.syncOut:
+				self.syncOut.par.active = False
+				self.syncOut.bypass = True
+				self.syncOut.destroy()
 			self.shdmemOut.par.active = state
 			self.touchOut.par.active = False
 
 		elif self.Syncmode == 'TOUCH_IN_OUT':
-			self.syncOut.par.active = False
-			self.syncOut.bypass = True
+			if self.syncOut:
+				self.syncOut.par.active = False
+				self.syncOut.bypass = True
+				self.syncOut.destroy()
 			self.shdmemOut.par.active = False
 			self.touchOut.par.active = state			
 
 	def SyncInActive(self, state):
-		if self.Syncmode == 'SYNC_CHOP':		
-			self.syncIn.par.active = state
-			self.syncIn.bypass = not state
+		if self.Syncmode == 'SYNC_CHOP':
+			if self.syncIn:		
+				self.syncIn.par.active = state
+				self.syncIn.bypass = not state
+			else:
+				self.syncIn = self.ownerComp.create(syncinCHOP, 'syncin')
+				self.syncIn.par.multicastaddress = self.syncAddress
+				self.syncIn.par.port = self.syncPort
+				self.syncIn.par.timeout = self.syncTimeout
+				self.syncIn.outputConnectors[0].connect(self.nullSyncIn)
+				self.syncIn.nodeX = -725
+				self.syncIn.nodeY = -400
+				self.nullSyncIn.lock = False
+
 			self.shdmemIn.par.active = False
 			self.touchIn.par.active = False
 
 		elif self.Syncmode == 'SHARED_MEM':
-			self.syncIn.par.active = False
-			self.syncIn.bypass = True
+			if self.syncIn:
+				self.nullSyncIn.lock = True
+				self.syncIn.par.active = False
+				self.syncIn.bypass = True
+				self.syncIn.destroy()
 			self.shdmemIn.par.active = state
 			self.touchIn.par.active = False
 
 		elif self.Syncmode == 'TOUCH_IN_OUT':
-			self.syncIn.par.active = False
-			self.syncIn.bypass = True
+			if self.syncIn:
+				self.nullSyncIn.lock = True
+				self.syncIn.par.active = False
+				self.syncIn.bypass = True
+				self.syncIn.destroy()
 			self.shdmemIn.par.active = False
 			self.touchIn.par.active = state			
 		
