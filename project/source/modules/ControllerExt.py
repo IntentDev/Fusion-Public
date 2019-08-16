@@ -1,4 +1,4 @@
-System = iop.Modules.op('System').module.System
+System = iop.Modules.op('system').module.System
 
 class ControllerExt(System):
 	"""

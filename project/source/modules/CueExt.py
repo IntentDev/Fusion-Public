@@ -1,5 +1,5 @@
-Parps = iop.Modules.op('ParProperties').module
-CueProperties = iop.Modules.op('CueProperties').module.CueProperties
+parprops = iop.Modules.op('parproperties').module
+CueProperties = iop.Modules.op('cueproperties').module.CueProperties
 
 class CueExt(CueProperties):
 	"""
@@ -7,7 +7,7 @@ class CueExt(CueProperties):
 	"""
 	def __init__(self, ownerComp):
 		self.ownerComp = ownerComp
-		Parps.parProperties(self, parCallbacksDAT=ownerComp.op('parCallbacks'))
+		parprops.parProperties(self, parCallbacksDAT=ownerComp.op('parCallbacks'))
 		CueProperties.__init__(self, ownerComp)
 
 		self.node = parent.FPlayer.NODE

@@ -1,4 +1,4 @@
-CueComp = op.FPlayer.op('modules/CueComp').module.CueComp
+CueComp = op.FPlayer.op('modules/cuecomp').module.CueComp
 class CueComp2DExt(CueComp):
 	"""
 	default custom content component for rendering 2D content

@@ -1,4 +1,4 @@
-parProps = iop.Modules.op('ParProperties').module
+parprops = iop.Modules.op('parproperties').module
 
 class SequencerExt:
 	"""
@@ -6,7 +6,7 @@ class SequencerExt:
 	"""
 	def __init__(self, ownerComp):
 		self.ownerComp = ownerComp
-		parProps.parProperties(self, parCallbacksDAT=ownerComp.op('parCallbacks'))
+		parprops.parProperties(self, parCallbacksDAT=ownerComp.op('parCallbacks'))
 		self.fPlayer = parent.FPlayer
 		self.Timer = ownerComp.op('timer1')
 		

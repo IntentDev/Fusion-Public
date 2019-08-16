@@ -1,6 +1,6 @@
-import kMath
+import kmath
 
-mathK = kMath.Math()
+mathK = kmath.Math()
 
 def GetCellList(input):
 
