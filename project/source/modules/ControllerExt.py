@@ -45,7 +45,6 @@ class ControllerExt(System):
 		elif self.NODE.Ismaster:
 			self.ownerComp.CurrentPlaylist.CurrentCue = self.SelectedCue
 			
-
 	def CueStartSync(self):
 		# called by chopexec looking at sync source
 		# debug("start cue from sync")
@@ -67,7 +66,6 @@ class ControllerExt(System):
 	# Playlist Functions
 	########################################################################	
 	def PlaylistReorder(self, cuesIndices):
-
 		self.ownerComp.CurrentPlaylist.Reorder(cuesIndices)
 
 	def PlaylistOnDrop(self, dropData):
@@ -94,7 +92,6 @@ class ControllerExt(System):
 				insert += 1
 
 	def CueDelete(self, cue):
-
 		if cue and self.ownerComp.NODE.Ismaster:
 			self.ownerComp.CurrentPlaylist.CueDelete(cue)
 
@@ -102,10 +99,8 @@ class ControllerExt(System):
 		label = 'Empty Cue'
 		self.ownerComp.CurrentPlaylist.CueCreate(label=label)
 
-
 	# Playlists Set Functions
-	########################################################################
-		
+	########################################################################		
 	def PlaylistsReorder(self, playistIndices):
 		self.ownerComp.Playlists.Reorder(playistIndices)
 
@@ -149,7 +144,6 @@ class ControllerExt(System):
 
 	# Sync 
 	########################################################################
-
 	def SetSyncSelects(self):
 			top1 = self.Cross.Select1.par.top.eval()
 			if top1:
@@ -184,7 +178,6 @@ class ControllerExt(System):
 
 	# System Wrapper Functions
 	########################################################################
-
 	def GetAttr(self, attribute, *args, **kwargs):
 		if self.CtrlInt:
 			getattr(self.ownerComp, attribute)(*args, **kwargs)

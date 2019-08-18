@@ -14,10 +14,7 @@ class System:
 		del nameSplit[-2]
 		self.fileName = '.'.join(nameSplit)
 
-	
-
 	def SetInstanceConfig(self):
-
 		if self.ownerComp.var('NODE'):
 			self.NODE_INDEX = int(self.ownerComp.var('NODE'))
 		else:
@@ -33,76 +30,51 @@ class System:
 		else:
 			self.GPU = 0	 	
 
-
 		self.NODE = self.NODES[self.NODE_INDEX]
-
 		self.ConfigureSytem()
 
-
 	def ConfigureSytem(self):
-
 		if self.NODE.par.Ismaster.eval():
-
 			if len(self.NODES) == 1:
-				self.ownerComp.Controlmode = 0
-			
+				self.ownerComp.Controlmode = 0			
 			else:
 				if self.NODE.par.Ispreviewrender.eval() or self.NODE.par.Outputvideo.eval():			
 					self.ownerComp.Controlmode = 1
 				else:
 					self.ownerComp.Controlmode = 2
-
 		else:
 			self.ownerComp.Controlmode = 3
-
-
 		self.ownerComp.Ismastersync = self.NODE.par.Ismastersync.eval()
-
 	
 	def OnStart(self):
-
 		self.SetInstanceConfig()
-
 		pass
 	
 	def OnSavePre(self):
-
 		#print('Saving: Fusion.toe')
-
 		pass
 
 	def Quit(self, quitAllNodes=False, quitMaster=False, nodeIndex=-1):
-
 		if self.NODE == self.MASTER and quitMaster:
 			project.quit(force=True)
 		
 		if self.NODE != self.MASTER and quitAllNodes:
 			project.quit(force=True)
-
 		elif nodeIndex > 0:
-
 			quitNode = self.NODES[nodeIndex]
 			if quitNode == self.NODE:
 				project.quit(force=True)
 
 	def Enablenodepreview(self, *args):
-
 		state = bool(args[0])
 		isPreviewRender = self.ownerComp.NODE.Ispreviewrender
-
 		if self.ownerComp.NODE.Ismaster:
-
 			self.Output.op('syphonspoutin1').bypass = not isPreviewRender and not state
-
-
-
 
 	# Node Start/Stop Functions
 	########################################################################
 	def LoadLocal(self, projectName, node = 0, server = 0, gpu = -1, monitor=0):
-
 		#if not (op.DATABASE.fetch('PREVIEW_NODE') == 'master' and node == 'node0'):
-
 			binFolder = app.binFolder
 			binFolder = re.sub('[/]', '\\\\', binFolder)
 
@@ -133,10 +105,7 @@ class System:
 					'Server', self.ownerComp.NODE.Address, '\n\t\t\t', 
 					'GPU', gpu, '\n\t\t\t', 'File ', projectPath)
 
-		#print(p.pid)
-
-	def StopLocal(self, pid):
-		
+	def StopLocal(self, pid):		
 		try:
 			mod.os.kill(pid, 0)
 		except:
@@ -148,9 +117,7 @@ class System:
 
 	def LoadRemote(self, client, userName, password, projectName, 
 					node = 0, server =0, gpu =-1, monitor=0):
-
 		masterIP = self.NODE.par.Address.eval()
-
 		binFolder = app.binFolder
 		binFolder = re.sub('[/]', '\\\\', binFolder)
 
@@ -187,7 +154,6 @@ class System:
 		#'\n\t\t\t', 'Launch Command ', launchCommand)
 
 	def KillRemoteNode(self, node):
-
 		client = node.Address
 		username = node.Username
 		password = node.Password
@@ -204,27 +170,19 @@ class System:
 		run("mod.subprocess.Popen(args[0], cwd = args[1])", 
 			pOpenCommand, rDir, delayFrames = 15 * node.Index)
 
-
-
 	def KillRemoteNodes(self):
-
 		self.Config.op('killAllRemoteNodes').run()
 
-
 	def StopRemote(self, client, userName, password, pid):
-
 		command = (r'C:\PSTools\pskill.exe \\'+ client +' -u '+ userName +
 					' -p '+ password + ' ' + str(pid))
 
 		mod.subprocess.Popen(command, cwd = r"C:\PSTools")
 
 	def LoadNode(self, node):
-
 		if node.Address == self.MASTER.Address or node.Address == 'localhost':
 			self.LoadLocal(self.fileName, node.Index, node.Server, node.Gpu)
-
 		else:
-
 			#print(node.Address, node.Username, node.Password, 
 			#				self.fileName, node.Index, 
 			#				node.Server, node.Gpu, node.Monitor)
@@ -234,10 +192,7 @@ class System:
 							node.Server, node.Gpu, node.Monitor)	
 
 	def Loadallnodes(self, *args):
-
-		self.Config.op('loadAllNodes').run()
-
-		
+		self.Config.op('loadAllNodes').run()		
 		# not working, no delay need to call script above
 		'''
 		for i, node in enumerate(self.NODES[1:]):
@@ -250,31 +205,20 @@ class System:
 		pass
 
 	def Quitallnodes(self, *args):
-
 		self.ownerComp.GetAttr('Quit', quitAllNodes=True)
-
 		pass
 
 	def Killallremotenodes(self, *args):
-
-
 		self.KillRemoteNodes()
 
 	def Loadnode(self, *args):
-
-		selectNodeIndex = self.ownerComp.par.Selectnode.menuIndex + 1
+		selectNodeIndex = self.ownerComp.par.Selectnode.menuIndex
 		node = self.NODES[selectNodeIndex]
-
 		self.LoadNode(node)
 
-
 	def Quitnode(self, *args):
-
-		selectNodeIndex = self.ownerComp.par.Selectnode.menuIndex + 1
+		selectNodeIndex = self.ownerComp.par.Selectnode.menuIndex
 		self.ownerComp.GetAttr('Quit', nodeIndex=selectNodeIndex)
-
-		pass
-
 	
 	@property
 	def MASTER(self):

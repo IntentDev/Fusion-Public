@@ -9,14 +9,12 @@ class ConfigExt():
 		self.masterNode = ownerComp.op('node0')
 
 	def GetNodes(self):
-
 		nodes = self.ownerComp.findChildren(tags=['NODE'], name='^masterNode0')
 		nodes.sort(key=lambda x: x.digits)
 
 		return nodes
 
 	def OnNumChildrenChange(self):
-
 		nodes = self.GetNodes()
 		nodeNames = [node.name for node in nodes]
 
@@ -25,7 +23,6 @@ class ConfigExt():
 
 
 	def InitNode(self, node):
-
 		node.Ismaster = False
 		node.Ismastersync = False
 		node.Ispreviewrender = False
@@ -41,7 +38,6 @@ class ConfigExt():
 
 
 	def Saveallnodes(self, *args):
-
 		confirm = ui.messageBox('Confirm Overwrite', 
 		'''Save/Overwrite All Nodes?\n\nPrevious versions will be copied to: config/nodes/backup/''', 
 		buttons=['Cancel', 'Save All Nodes'])
