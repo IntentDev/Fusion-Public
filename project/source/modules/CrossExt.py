@@ -1,9 +1,5 @@
 class CrossExt:
-	"""
-	CrossExt description
-	"""
 	def __init__(self, ownerComp):
-		# The component to which this extension is attached
 		self.ownerComp = ownerComp
 		self.fPlayer = parent.FPlayer
 		self.crossBlend = ownerComp.op('crossBlend')
@@ -13,15 +9,11 @@ class CrossExt:
 		self.Select2 = ownerComp.op('select2')
 
 		self.selects = [self.Select1, self.Select2]
-		#self.CrossVal = 0
-
 		self.runGroup = str(ownerComp.id)
 
 	def CrossFade(self, comp):
-		#debug('CrossFade:', comp)
 		trigVal = self.trigger[0].eval()
-		if trigVal == 0.0 or trigVal == 1.0:
-			#if self.fPlayer.CtrlInt:	
+		if trigVal == 0.0 or trigVal == 1.0:	
 			self.NextTop = comp.Texture
 			self.Cross()
 			self.fPlayer.SetSyncSelects()
@@ -36,7 +28,6 @@ class CrossExt:
 
 	def CrossFadeRemote(self, comp):
 		self.CrossVal = round(self.crossChop[0].eval())
-		#debug('CrossFadeRemote:', comp, self.CrossVal)
 		self.NextTop = comp.Texture
 		self.Cross()
 		self.fPlayer.SetSyncSelects()
