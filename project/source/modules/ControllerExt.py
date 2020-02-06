@@ -181,27 +181,21 @@ class ControllerExt(System):
 	def GetAttr(self, attribute, *args, **kwargs):
 		if self.CtrlInt:
 			getattr(self.ownerComp, attribute)(*args, **kwargs)
-		if self.CtrlExt:
-			self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)
-
-		#getattr(self.ownerComp, attribute)(*args, **kwargs)
-		#self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)
-
+		# if self.CtrlExt:
+		# 	self.Remote.GetAttr(self.ownerComp, attribute, *args, **kwargs)
+		
 	def SetAttr(self, comp, attribute, value):
 		if self.CtrlInt:
 			setattr(comp, attribute, value)
-		if self.CtrlExt:
-			self.Remote.SetAttr(comp, attribute, value)
-
-		#setattr(comp, attribute, value)
-		#self.Remote.SetAttr(comp, attribute, value)
+		# if self.CtrlExt:
+		# 	self.Remote.SetAttr(comp, attribute, value)
 
 	def SetPar(self, comp, parName, value, internal=False, external=True):
 		if internal:
 			setattr(comp.par, parName, value)
 
-		if self.CtrlExt and external:
-			self.Remote.SetPar(comp, parName, value)
+		# if self.CtrlExt and external:
+		# 	self.Remote.SetPar(comp, parName, value)
 
 	@property
 	def Controlmode(self):

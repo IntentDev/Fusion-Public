@@ -27,8 +27,8 @@ class CueExt(CueProperties):
 		#self.ParpGrp.Someparname.fSet = self.SomeOtherFunction
 
 	def ParChange(self, par):
-		#self.FPlayer.CueParChange(self.ownerComp, par)
-		self.FPlayer.Remote.SetAttr(par.owner, par.name, par.eval())
+		if self.FPlayer.RemoteCtrl:
+			self.FPlayer.Remote.SetAttr(par.owner, par.name, par.eval())
 		self.playlist.SetPlaylist()
 
 	def Start(self):
@@ -49,6 +49,10 @@ class CueExt(CueProperties):
 				self.AudioFileCue = False
 			else:
 				self.AudioFileIn.par.cuepulse.pulse()
+
+		if self.Bindtocueactive:
+			if self.Bindtocueplayer != self.FPlayer:
+				self.Bindtocueplayer.GetAttr('CueStart')
 
 	def End(self):
 		if self.Texsource == 'FILE':			

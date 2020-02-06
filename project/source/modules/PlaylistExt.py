@@ -25,6 +25,12 @@ class PlaylistExt:
 	def CueSelect(self, cue):
 		self.SelectedCue = cue
 
+		if cue.Bindtocueactive:
+			if cue.Bindtocueplayer != self.FPlayer:
+				row = cue.Bindtocuenumber - 1
+				cue.Bindtocueplayer.op('ui/playlist/playlist/list/lister').SelectRow(row)
+				
+
 	def CueCreate(	self, label=None, top=None, comp=None, audioChop=None, 
 					movFile=None, duration=10, insert=-1):
 		cueID = self.MaxCueIndex + 1

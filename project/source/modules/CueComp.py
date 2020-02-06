@@ -2,7 +2,7 @@ class CueComp():
 
 	def __init__(self, ownerComp):
 		self.ownerComp = ownerComp
-		self.FPlayer = op.FPlayer
+		self.FPlayer = parent.FPlayer
 		self.FPlayerCueComp = True
 		self.Timer = ownerComp.op('timer1')
 		self.selExternalIndex = ownerComp.op('selExternalIndex')

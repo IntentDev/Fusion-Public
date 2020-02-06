@@ -22,7 +22,7 @@ class VideoConvertor:
 		# attributes:
 		self.movIn = ownerComp.op('moviefilein1')
 		self.movOut = ownerComp.op('moviefileout0')
-		self.FPlayer = op.FPlayer
+		self.FPlayer = parent.FPlayer
 		self.batchFolder = ownerComp.op('batchFolder')
 		self.outputs = 4
 		self.movOuts = []

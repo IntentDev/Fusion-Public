@@ -1,7 +1,7 @@
-CueComp = op.FPlayer.op('modules/cuecomp').module.CueComp
-ParProps = op.FPlayer.op('modules/parproperties').module
-mathFunc = op.FPlayer.op('modules/kmath').module
-listFunc = op.FPlayer.op('modules/listfunc').module
+CueComp = iop.FPlayer.op('modules/cuecomp').module.CueComp
+ParProps = iop.FPlayer.op('modules/parproperties').module
+mathFunc = iop.FPlayer.op('modules/kmath').module
+listFunc = iop.FPlayer.op('modules/listfunc').module
 
 class CueComp2DExt(CueComp):
 	"""
