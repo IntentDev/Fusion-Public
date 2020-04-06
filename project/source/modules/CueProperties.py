@@ -60,12 +60,5 @@ class CueProperties():
 		else:
 			return self.Movfile
 
-	@property
-	def AudioFileCue(self):
-		return self.AudioFileIn.par.cue.eval()
 
-	@AudioFileCue.setter
-	def AudioFileCue(self, value):
-		print('AudioFileCue', value)
-		self.AudioFileIn.par.cue = value
 	

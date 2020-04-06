@@ -75,7 +75,7 @@ class SequencerExt:
 		if endAction == 'RE-INIT':
 			self.Initialize()
 		elif endAction == 'RE-START':
-			run("args[0].Start()", self.ownerComp, delayFrames=2)
+			self.Start()
 
 	def cue(self, cueIndex):
 		return self.curPlaylist[cueIndex][1]

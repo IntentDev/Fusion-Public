@@ -44,11 +44,8 @@ class CueExt(CueProperties):
 
 			self.Comp.Start()
 
-		if self.Audiosource == 'AUDIO_FILE' and self.node.Outputaudio:
-			if self.AudioFileCue:
-				self.AudioFileCue = False
-			else:
-				self.AudioFileIn.par.cuepulse.pulse()
+		if self.Audiosource == 'AUDIO_FILE' and self.isPreview:
+			self.Audiochop.par.Cuepulse.pulse()
 
 		if self.Bindtocueactive:
 			if self.Bindtocueplayer != self.FPlayer:
@@ -60,9 +57,6 @@ class CueExt(CueProperties):
 
 		if self.Comp and self.FPlayerCueCompLoaded:
 			self.Comp.End()
-
-		if self.Audiosource == 'AUDIO_FILE' and self.node.Outputaudio:
-			self.AudioFileCue = True
 
 	def Pulse(self):	
 		if self.Texsource == 'FILE':
