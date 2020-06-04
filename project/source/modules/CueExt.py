@@ -47,9 +47,10 @@ class CueExt(CueProperties):
 		if self.Audiosource == 'AUDIO_FILE' and self.isPreview:
 			self.Audiochop.par.Cuepulse.pulse()
 
-		if self.Bindtocueactive:
-			if self.Bindtocueplayer != self.FPlayer:
-				self.Bindtocueplayer.GetAttr('CueStart')
+		# need to add Bindtocueactive on MasterCue for this to work (use for multiple players)
+		# if self.Bindtocueactive:
+		# 	if self.Bindtocueplayer != self.FPlayer:
+		# 		self.Bindtocueplayer.GetAttr('CueStart')
 
 	def End(self):
 		if self.Texsource == 'FILE':			

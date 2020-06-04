@@ -25,10 +25,11 @@ class PlaylistExt:
 	def CueSelect(self, cue):
 		self.SelectedCue = cue
 
-		if cue.Bindtocueactive:
-			if cue.Bindtocueplayer != self.FPlayer:
-				row = cue.Bindtocuenumber - 1
-				cue.Bindtocueplayer.op('ui/playlist/playlist/list/lister').SelectRow(row)
+		# need to add Bindtocueactive on MasterCue for this to work (use for multiple players)
+		# if cue.Bindtocueactive:
+		# 	if cue.Bindtocueplayer != self.FPlayer:
+		# 		row = cue.Bindtocuenumber - 1
+		# 		cue.Bindtocueplayer.op('ui/playlist/playlist/list/lister').SelectRow(row)
 				
 
 	def CueCreate(	self, label=None, top=None, comp=None, audioChop=None, 
