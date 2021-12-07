@@ -11,7 +11,8 @@ class RemoteExt:
 		self.tcpip = ownerComp.op('tcpip')
 		self.sync = ownerComp.op('sync')
 
-		self.remoteFuncs = [self.setAttr, self.setPar, self.getAttr]
+		self.remoteFuncs = [self.setAttr, self.setPar, self.getAttr,
+			self.parPulse, self.setDatCell, self.setDatText]
 
 	def SetMode(self, mode):
 
@@ -62,6 +63,18 @@ class RemoteExt:
 		data = pickle.dumps([2, comp.path, attribute, args, kwargs])
 		self.tcpip.sendBytes(data)
 
+	def ParPulse(self, comp, parName):
+		args = pickle.dumps([3, comp.path, parName])
+		self.tcpip.sendBytes(args)
+
+	def SetDatCell(self, dat, row, col, val):
+		args = pickle.dumps([4, dat.path, row, col, val])
+		self.tcpip.sendBytes(args)
+
+	def SetDatText(self, dat):
+		args = pickle.dumps([5, dat.path, dat.text])
+		self.tcpip.sendBytes(args)	
+
 	# Receive
 	##########################################
 	def ReceiveBytes(self, bytes):
@@ -90,7 +103,26 @@ class RemoteExt:
 	
 		getattr(comp, attribute)(*args, **kwargs)
 
+	def parPulse(self, data):
+		comp = op(data[0])
+		parName = data[1]
+		if comp:		
+			getattr(comp.par, parName).pulse()
 
+	def setDatCell(self, data):
+		dat = op(data[0])
+		row = data[1]
+		col = data[2]
+		val = data[3]
+		if dat:		
+			dat[row, col] = val
+
+	def setDatText(self, data):
+		dat = op(data[0])
+		text = data[1]
+		if dat:		
+			dat.text = text  
+			
 	@property
 	def ConnectionMode(self):
 		return self.tcpip.par.mode.eval()
