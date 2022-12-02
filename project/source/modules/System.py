@@ -181,7 +181,10 @@ class System:
 
 	def LoadNode(self, node):
 		if node.Address == self.MASTER.Address or node.Address == 'localhost':
-			self.LoadLocal(self.fileName, node.Index, node.Server, node.Gpu)
+			self.LoadLocal(
+				self.fileName, node.Index, 
+				node.Server, node.Gpu, node.Monitor
+			)
 		else:
 			#print(node.Address, node.Username, node.Password, 
 			#				self.fileName, node.Index, 
